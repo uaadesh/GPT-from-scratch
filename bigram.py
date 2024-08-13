@@ -101,8 +101,10 @@ m = model.to(device)
 # create a PyTorch optimizer
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
+print(f"Model Loaded on {device}\n")
+print("Starting to train the Bigram model...")
 for iter in range(max_iters):
-
+    
     # every once in a while evaluate the loss on train and val sets
     if iter % eval_interval == 0:
         losses = estimate_loss()
@@ -118,5 +120,6 @@ for iter in range(max_iters):
     optimizer.step()
 
 # generate from the model
+print("\nGenerating some text from the model : ")
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
